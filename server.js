@@ -39,18 +39,17 @@ app.post("/users", (request, response) => {
   request.session.user = request.body;
   var mysteryWord = words[Math.floor(Math.random() * words.length)];
   console.log(mysteryWord);
-  mysteryWord = mysteryWord.split("");
-  console.log(mysteryWord);
   request.session.game = {
-    word: mysteryWord,
     guessCount: 8,
-    guessChars: [],
-    correctChars: []
+    guessed: [],
+    correct: [],
+    remaining: mysteryWord.split("")
   };
   response.redirect("/game");
 });
 
 app.get("/game", checkAuth, (request, response) => {
+  console.log(request.session);
   response.render("game", {
     user: request.session.user,
     game: request.session.game
@@ -58,8 +57,27 @@ app.get("/game", checkAuth, (request, response) => {
 });
 
 app.post("/guess", checkAuth, (request, response) => {
-  var guess = request.body;
-  console.log(guess);
+  var guessChar = request.body;
+  var gameState = request.session.game;
+  // new guess if not in guessed array (no index)
+  var newGuess = gameState.guessed.indexOf(guessChar) < 0;
+  console.log("new guess: ", newGuess);
+  // bad guess if not in remaining array (no index)
+  var goodGuess = gameState.remaining.indexOf(guessChar) >= 0;
+  console.log("good guess: ", goodGuess);
+
+  if (newGuess) {
+    gameState.guessed.push(guessChar);
+    if (goodGuess) {
+      gameState.correct.push(guessChar);
+      // remaining array stripped of good guess
+      gameState.remaining = gameState.remaining.filter(char => {
+        return char != guessChar;
+      });
+    } else {
+      gameState.guessCount--;
+    }
+  }
   response.redirect("/game");
 });
 
