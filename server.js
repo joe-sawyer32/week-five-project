@@ -10,7 +10,7 @@ const session = require("express-session");
 const sessionConfig = require(path.join(__dirname, "sessionConfig"));
 
 // GAME SPECIFIC REQUIRES
-const mysteryWord = require(path.join(__dirname, "data.js"));
+const words = require(path.join(__dirname, "data.js"));
 
 // SET ENGINE
 app.engine("mustache", mustacheExpress());
@@ -41,9 +41,19 @@ app.post("/users", (request, response) => {
 });
 
 app.get("/game", checkAuth, (request, response) => {
-  response.send(mysteryWord);
-  //   response.render("game", { user: request.session.user });
+  var mysteryWord = words[Math.floor(Math.random() * words.length)];
+  console.log(mysteryWord);
+  var currentUser = request.session.user;
+  currentUser.word = mysteryWord;
+  if (!currentUser.guesses) {
+    currentUser.guesses = 8;
+  }
+  response.render("game", {
+    user: currentUser
+  });
 });
+
+app.post("/guess", checkAuth, (request, response) => {});
 
 app.listen(port, () => {
   console.log("Spinning with express: Port", port);

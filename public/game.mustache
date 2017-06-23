@@ -11,7 +11,13 @@
 <body>
     <h1>GAME PAGE</h1>
     {{#user}}
-    <h3>Time to Play {{username}}!</h3>
+    <h2>User: {{username}}</h2>
+    <h3>Guesses Remaining: {{guesses}}</h3>
+
+    <form action="/guess" method="post">
+        <label for="guessChar">Your Guess: </label>
+        <input type="text" name="guessChar">
+    </form>
     {{/user}}
 </body>
 
