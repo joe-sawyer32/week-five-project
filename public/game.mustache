@@ -10,15 +10,15 @@
 
 <body>
     <h1>GAME PAGE</h1>
-    {{#user}}
+    {{#user}} {{#game}}
     <h2>User: {{username}}</h2>
-    <h3>Guesses Remaining: {{guesses}}</h3>
+    <h3>Guesses Remaining: {{guessCount}}</h3>
 
     <form action="/guess" method="post">
         <label for="guessChar">Your Guess: </label>
         <input type="text" name="guessChar">
     </form>
-    {{/user}}
+    {{/game}} {{/user}}
 </body>
 
 </html>

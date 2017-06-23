@@ -37,23 +37,31 @@ app.get("/", (request, response) => {
 app.post("/users", (request, response) => {
   // need validation
   request.session.user = request.body;
+  var mysteryWord = words[Math.floor(Math.random() * words.length)];
+  console.log(mysteryWord);
+  mysteryWord = mysteryWord.split("");
+  console.log(mysteryWord);
+  request.session.game = {
+    word: mysteryWord,
+    guessCount: 8,
+    guessChars: [],
+    correctChars: []
+  };
   response.redirect("/game");
 });
 
 app.get("/game", checkAuth, (request, response) => {
-  var mysteryWord = words[Math.floor(Math.random() * words.length)];
-  console.log(mysteryWord);
-  var currentUser = request.session.user;
-  currentUser.word = mysteryWord;
-  if (!currentUser.guesses) {
-    currentUser.guesses = 8;
-  }
   response.render("game", {
-    user: currentUser
+    user: request.session.user,
+    game: request.session.game
   });
 });
 
-app.post("/guess", checkAuth, (request, response) => {});
+app.post("/guess", checkAuth, (request, response) => {
+  var guess = request.body;
+  console.log(guess);
+  response.redirect("/game");
+});
 
 app.listen(port, () => {
   console.log("Spinning with express: Port", port);
