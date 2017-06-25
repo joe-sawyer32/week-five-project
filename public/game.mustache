@@ -13,12 +13,14 @@
     {{#user}}
         {{#game}}
             <h2>User: {{username}}</h2>
+            <h3>{{display}}</h3>
             {{#guessCount}}
             <h3>Guesses Remaining: {{guessCount}}</h3>
             <form action="/guess" method="post">
                 <label for="guess">Your Guess: </label>
                 <input type="text" name="guess">
             </form>
+            <h3>Letters Guessed: {{guessed}}</h3>
             {{/guessCount}} 
             {{#gameover}}
                 {{#winner}}

@@ -11,7 +11,7 @@ const sessionConfig = require(path.join(__dirname, "sessionConfig"));
 
 // GAME SPECIFICS
 const words = require(path.join(__dirname, "data.js"));
-const startGuesses = 8;
+var guessCount;
 
 // SET ENGINE
 app.engine("mustache", mustacheExpress());
@@ -71,26 +71,27 @@ app.post("/users", (request, response) => {
 });
 
 app.post("/newgame", checkAuth, (request, response) => {
-  console.log("new game session request: ", request.body);
-
+  guessCount = 8;
   var mysteryWord = words[Math.floor(Math.random() * words.length)];
   console.log(mysteryWord);
-  request.session.user.word = mysteryWord;
+  var display = [];
+  for (let i = 0; i < mysteryWord.length; i++) {
+    display[i] = "-";
+  }
+  console.log(display);
   request.session.game = {
+    word: mysteryWord.split(""),
     guessed: [],
-    correct: [],
-    remaining: mysteryWord.split("")
+    display: display
   };
+  console.log(request.session.game);
   response.redirect("/game");
 });
 
 app.get("/game", checkAuth, (request, response) => {
-  let guessesLeft =
-    startGuesses -
-    (request.session.game.guessed.length - request.session.game.correct.length);
-
-  let unguessedChars = request.session.game.remaining.length;
-  if (guessesLeft) {
+  // unguessed chars if dashes in display
+  let unguessedChars = request.session.game.display.indexOf("-") >= 0;
+  if (guessCount > 0) {
     if (unguessedChars) {
       console.log("Game still going");
       if (request.session.errors) {
@@ -98,7 +99,7 @@ app.get("/game", checkAuth, (request, response) => {
         response.render("game", {
           user: request.session.user,
           game: request.session.game,
-          guessCount: guessesLeft,
+          guessCount: guessCount,
           errors: request.session.errors
         });
       } else {
@@ -106,7 +107,7 @@ app.get("/game", checkAuth, (request, response) => {
         response.render("game", {
           user: request.session.user,
           game: request.session.game,
-          guessCount: guessesLeft
+          guessCount: guessCount
         });
       }
     } else {
@@ -118,11 +119,11 @@ app.get("/game", checkAuth, (request, response) => {
       });
     }
   } else {
+    request.session.game.word = request.session.game.word.join("");
     console.log("Out of guesses, loser...");
     response.render("game", {
       user: request.session.user,
       game: request.session.game,
-      word: request.session.user.word,
       gameover: { loser: true }
     });
   }
@@ -135,19 +136,20 @@ app.post("/guess", checkAuth, checkSingleAlpha, (request, response) => {
   // new guess if not in guessed array (no index)
   var newGuess = gameState.guessed.indexOf(guessChar) < 0;
   console.log("new guess: ", newGuess);
-  // good guess if in remaining array
-  var goodGuess = gameState.remaining.indexOf(guessChar) >= 0;
+  // good guess if in word array
+  var goodGuess = gameState.word.indexOf(guessChar) >= 0;
   console.log("good guess: ", goodGuess);
 
   if (newGuess) {
     gameState.guessed.push(guessChar);
     if (goodGuess) {
-      gameState.correct.push(guessChar);
-      // remaining array stripped of good guess
-      gameState.remaining = gameState.remaining.filter(char => {
-        return char != guessChar;
+      gameState.word.forEach((char, index) => {
+        if (char === guessChar) {
+          gameState.display[index] = char;
+        }
       });
     } else {
+      guessCount--;
       // not good guess, message - "Incorrect letter."
     }
   } else {
