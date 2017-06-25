@@ -23,8 +23,10 @@
     <h3>The myster word was: {{word}}</h3>
     <h3>Would you like to play again?</h3>
     <form action="/newgame" method="post">
-        <input type="submit" name "yes" id="yes" value="Yes">
-        <input type="submit" name "no" id="no" value="No">
+        <button type="submit">Yes</button>
+    </form>
+    <form action="/" method="get">
+        <button type="submit">No</button>
     </form>
     {{/guessCount}} {{/game}} {{/user}}
 </body>

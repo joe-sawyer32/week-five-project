@@ -9,13 +9,20 @@
 </head>
 
 <body>
-    <h1>ROOT PAGE</h1>
-    {{}}
+    <h1>MYSTERY WORD</h1>
+    {{^user}}
+    <h3>Please login to play the game</h3>
     <form action="/users" method="post">
         <input type="text" name="username" placeholder="Enter your name">
+        <button type="submit">Login</button>
+    </form>
+    {{/user}}
+    <form action="/newgame" method="post">
         <button type="submit">PLAY</button>
     </form>
-    {{}}
+    {{#user}}
+    <h4>You are logged in as: {{username}}</h4>
+    {{/user}}
 </body>
 
 </html>

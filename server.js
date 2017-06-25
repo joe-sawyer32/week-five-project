@@ -52,11 +52,27 @@ function checkSingleAlpha(request, response, next) {
   }
 }
 
-function newGameSess(request, response, next) {
-  console.log("new game session request: ", request.body);
+// ROUTES
+app.get("/", (request, response) => {
+  response.render("index", {
+    user: request.session.user,
+    errors: request.session.errors
+  });
+});
+
+app.post("/users", (request, response) => {
   if (!request.session.user) {
     request.session.user = request.body;
   }
+  response.render("index", {
+    user: request.session.user,
+    errors: request.session.errors
+  });
+});
+
+app.post("/newgame", checkAuth, (request, response) => {
+  console.log("new game session request: ", request.body);
+
   var mysteryWord = words[Math.floor(Math.random() * words.length)];
   console.log(mysteryWord);
   request.session.user.word = mysteryWord;
@@ -65,17 +81,6 @@ function newGameSess(request, response, next) {
     correct: [],
     remaining: mysteryWord.split("")
   };
-  next();
-}
-
-// ROUTES
-app.get("/", (request, response) => {
-  response.render("index", { errors: request.session.errors });
-});
-
-app.post("/newgame", newGameSess, (request, response) => {
-  // need validation
-
   response.redirect("/game");
 });
 
