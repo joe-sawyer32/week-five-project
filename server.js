@@ -114,8 +114,7 @@ app.get("/game", checkAuth, (request, response) => {
       response.render("game", {
         user: request.session.user,
         game: request.session.game,
-        guessCount: guessesLeft,
-        winner: "user"
+        gameover: { winner: true }
       });
     }
   } else {
@@ -123,7 +122,8 @@ app.get("/game", checkAuth, (request, response) => {
     response.render("game", {
       user: request.session.user,
       game: request.session.game,
-      word: request.session.user.word
+      word: request.session.user.word,
+      gameover: { loser: true }
     });
   }
 });

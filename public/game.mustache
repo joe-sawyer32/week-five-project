@@ -10,25 +10,34 @@
 
 <body>
     <h1>GAME PAGE</h1>
-    {{#user}} {{#game}}
-    <h2>User: {{username}}</h2>
-    {{#guessCount}}
-    <h3>Guesses Remaining: {{guessCount}}</h3>
-    <form action="/guess" method="post">
-        <label for="guess">Your Guess: </label>
-        <input type="text" name="guess">
-    </form>
-    {{/guessCount}} {{^guessCount}}
-    <h3>You're out of guesses...</h3>
-    <h3>The myster word was: {{word}}</h3>
-    <h3>Would you like to play again?</h3>
-    <form action="/newgame" method="post">
-        <button type="submit">Yes</button>
-    </form>
-    <form action="/" method="get">
-        <button type="submit">No</button>
-    </form>
-    {{/guessCount}} {{/game}} {{/user}}
+    {{#user}}
+        {{#game}}
+            <h2>User: {{username}}</h2>
+            {{#guessCount}}
+            <h3>Guesses Remaining: {{guessCount}}</h3>
+            <form action="/guess" method="post">
+                <label for="guess">Your Guess: </label>
+                <input type="text" name="guess">
+            </form>
+            {{/guessCount}} 
+            {{#gameover}}
+                {{#winner}}
+                    <h3>Congratulations! You cracked the mystery word!</h3>
+                {{/winner}}
+                {{#loser}}
+                    <h3>You're out of guesses...</h3>
+                    <h3>The myster word was: {{word}}</h3>
+                {{/loser}}
+                <h3>Would you like to play again?</h3>
+                <form action="/newgame" method="post">
+                    <button type="submit">Yes</button>
+                </form>
+                <form action="/" method="get">
+                    <button type="submit">No</button>
+                </form>
+            {{/gameover}}
+        {{/game}}
+    {{/user}}
 </body>
 
 </html>
