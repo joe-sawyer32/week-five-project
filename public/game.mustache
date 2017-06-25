@@ -12,13 +12,21 @@
     <h1>GAME PAGE</h1>
     {{#user}} {{#game}}
     <h2>User: {{username}}</h2>
+    {{#guessCount}}
     <h3>Guesses Remaining: {{guessCount}}</h3>
-
     <form action="/guess" method="post">
-        <label for="guessChar">Your Guess: </label>
-        <input type="text" name="guessChar">
+        <label for="guess">Your Guess: </label>
+        <input type="text" name="guess">
     </form>
-    {{/game}} {{/user}}
+    {{/guessCount}} {{^guessCount}}
+    <h3>You're out of guesses...</h3>
+    <h3>The myster word was: {{word}}</h3>
+    <h3>Would you like to play again?</h3>
+    <form action="/newgame" method="post">
+        <input type="submit" name "yes" id="yes" value="Yes">
+        <input type="submit" name "no" id="no" value="No">
+    </form>
+    {{/guessCount}} {{/game}} {{/user}}
 </body>
 
 </html>
