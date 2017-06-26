@@ -11,23 +11,28 @@
 <body>
     <h1>MYSTERY WORD</h1>
     {{^user}}
-    <h3>Please login to play:</h3>
     <form action="/users" method="post">
         <input type="text" name="username" placeholder="Enter your name">
         <button type="submit">Login</button>
     </form>
-    {{/user}} {{#user}}
-    <h4>You are logged in as: {{username}}</h4>
-    {{/user}} {{^difficulty}}
-    <form action="/difficulty" method="post">
-        <button type="submit">PLAY</button>
-    </form>
-    {{/difficulty}} {{#difficulty}}
-    <form action="/newgame" method="post">
-        <input type="submit" name="difficulty" value="easy">
-        <input type="submit" name="difficulty" value="normal">
-        <input type="submit" name="difficulty" value="hard">
-    </form>
+    {{#errors}}
+        <p>{{msg}}</p>
+    {{/errors}}
+    {{/user}}
+    {{#user}}
+        <h4>You are logged in as: {{username}}</h4>
+    {{/user}}
+    {{^difficulty}}
+        <form action="/difficulty" method="post">
+            <button type="submit">PLAY</button>
+        </form>
+    {{/difficulty}}
+    {{#difficulty}}
+        <form action="/newgame" method="post">
+            <input type="submit" name="difficulty" value="easy">
+            <input type="submit" name="difficulty" value="normal">
+            <input type="submit" name="difficulty" value="hard">
+        </form>
     {{/difficulty}}
 </body>
 

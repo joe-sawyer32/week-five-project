@@ -166,6 +166,11 @@ app.post("/game", checkAuth, checkSingleAlpha, (request, response) => {
     }
   } else {
     // not new guess, error message - "You already guessed that letter."
+    return response.render("game", {
+      user: request.session.user,
+      game: request.session.game,
+      errors: { msg: "you already guessed that letter" }
+    });
   }
 
   response.redirect("/game");

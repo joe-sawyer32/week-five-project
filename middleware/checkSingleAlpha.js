@@ -8,17 +8,10 @@ function checkSingleAlpha(request, response, next) {
   let errors = request.validationErrors();
 
   if (errors) {
-    console.log("we got errors...");
-    console.log("errors: ", errors);
-    var errorMessages = [];
-    errors.forEach(error => {
-      errorMessages.push(error.msg);
-    });
-    console.log("passing error messages to template: ", errorMessages);
     return response.render("../views/game", {
       user: request.session.user,
       game: request.session.game,
-      errors: errorMessages.join(" and ")
+      errors: errors
     });
   } else {
     next();
