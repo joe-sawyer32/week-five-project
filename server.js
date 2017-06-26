@@ -11,6 +11,7 @@ const sessionConfig = require(path.join(__dirname, "sessionConfig"));
 
 // GAME SPECIFICS
 const words = require(path.join(__dirname, "data.js"));
+var wordset;
 var guessCount;
 
 // SET ENGINE
@@ -80,7 +81,7 @@ app.post("/difficulty", checkAuth, (request, response) => {
 app.post("/newgame", checkAuth, (request, response) => {
   guessCount = 8;
   // select wordset based on requested difficulty
-  let wordset = words[request.body.difficulty + "Words"];
+  wordset = words[request.body.difficulty + "Words"];
   var mysteryWord = wordset[Math.floor(Math.random() * wordset.length)];
   console.log(mysteryWord);
   var display = [];
