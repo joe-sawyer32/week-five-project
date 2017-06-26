@@ -16,10 +16,13 @@
             <h3>{{display}}</h3>
             {{#guessCount}}
             <h3>Guesses Remaining: {{guessCount}}</h3>
-            <form action="/guess" method="post">
+            <form action="/game" method="post">
                 <label for="guess">Your Guess: </label>
                 <input type="text" name="guess">
             </form>
+            {{#errors}}
+                <h4>{{errors}}</h4>
+            {{/errors}}
             <h3>Letters Guessed: {{guessed}}</h3>
             {{/guessCount}} 
             {{#gameover}}

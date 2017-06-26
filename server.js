@@ -1,57 +1,58 @@
 const express = require("express");
 const app = express();
 const port = process.env.port || 8000;
-const path = require("path");
 
 const mustacheExpress = require("mustache-express");
 const bodyParser = require("body-parser");
 const expressValidator = require("express-validator");
 const session = require("express-session");
-const sessionConfig = require(path.join(__dirname, "sessionConfig"));
+const sessionConfig = require("./sessionConfig");
 
 // GAME SPECIFICS
-const words = require(path.join(__dirname, "data.js"));
+const words = require("./models/data");
+const checkAuth = require("./middleware/checkAuth.js");
+const checkSingleAlpha = require("./middleware/checkSingleAlpha.js");
 var wordset;
-var guessCount;
+const startGuesses = 8;
 
 // SET ENGINE
 app.engine("mustache", mustacheExpress());
 app.set("view engine", "mustache");
-app.set("views", path.join(__dirname, "/public"));
+app.set("views", "./views");
 
 // MIDDLEWARE
-app.use("/", express.static(path.join(__dirname, "/public")));
+app.use("/", express.static("/public"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());
 app.use(session(sessionConfig));
 
-function checkAuth(request, response, next) {
-  if (!request.session.user) {
-    request.session.errors = { msg: "Please login to begin playing." };
-    response.redirect("/");
-  } else {
-    delete request.session.errors;
-    next();
-  }
-}
+// function checkAuth(request, response, next) {
+//   if (!request.session.user) {
+//     request.session.errors = { msg: "Please login to begin playing." };
+//     response.redirect("/");
+//   } else {
+//     delete request.session.errors;
+//     next();
+//   }
+// }
 
-function checkSingleAlpha(request, response, next) {
-  request
-    .checkBody("guess", "Please select only alphabet character.")
-    .isAlpha();
-  request
-    .checkBody("guess", "Please select one character.")
-    .isLength({ min: 1, max: 1 });
-  let errors = request.validationErrors();
-  request.session.errors = errors;
+// function checkSingleAlpha(request, response, next) {
+//   request
+//     .checkBody("guess", "Please select only alphabet character.")
+//     .isAlpha();
+//   request
+//     .checkBody("guess", "Please select one character.")
+//     .isLength({ min: 1, max: 1 });
+//   let errors = request.validationErrors();
+//   request.session.errors = errors;
 
-  if (errors) {
-    response.redirect("/game");
-  } else {
-    delete request.session.errors;
-    next();
-  }
-}
+//   if (errors) {
+//     response.redirect("/game");
+//   } else {
+//     delete request.session.errors;
+//     next();
+//   }
+// }
 
 // ROUTES
 app.get("/", (request, response) => {
@@ -79,7 +80,6 @@ app.post("/difficulty", checkAuth, (request, response) => {
 });
 
 app.post("/newgame", checkAuth, (request, response) => {
-  guessCount = 8;
   // select wordset based on requested difficulty
   wordset = words[request.body.difficulty + "Words"];
   var mysteryWord = wordset[Math.floor(Math.random() * wordset.length)];
@@ -92,32 +92,34 @@ app.post("/newgame", checkAuth, (request, response) => {
   request.session.game = {
     word: mysteryWord.split(""),
     guessed: [],
-    display: display
+    display: display,
+    guessCount: startGuesses
   };
   console.log(request.session.game);
   response.redirect("/game");
 });
 
 app.get("/game", checkAuth, (request, response) => {
+  console.log("game state: ", request.session);
+  let guessesLeft = request.session.game.guessCount > 0;
   // unguessed chars if dashes in display
   let unguessedChars = request.session.game.display.indexOf("-") >= 0;
-  if (guessCount > 0) {
+  if (guessesLeft) {
     if (unguessedChars) {
       console.log("Game still going");
+      console.log("validation errors: ", request.session.errors);
       if (request.session.errors) {
         console.log("Rendering with errors");
         response.render("game", {
           user: request.session.user,
           game: request.session.game,
-          guessCount: guessCount,
           errors: request.session.errors
         });
       } else {
         console.log("Rendering with no errors");
         response.render("game", {
           user: request.session.user,
-          game: request.session.game,
-          guessCount: guessCount
+          game: request.session.game
         });
       }
     } else {
@@ -139,7 +141,7 @@ app.get("/game", checkAuth, (request, response) => {
   }
 });
 
-app.post("/guess", checkAuth, checkSingleAlpha, (request, response) => {
+app.post("/game", checkAuth, checkSingleAlpha, (request, response) => {
   var guessChar = request.body.guess.toLowerCase();
   var gameState = request.session.game;
   console.log(guessChar);
@@ -159,7 +161,7 @@ app.post("/guess", checkAuth, checkSingleAlpha, (request, response) => {
         }
       });
     } else {
-      guessCount--;
+      gameState.guessCount--;
       // not good guess, message - "Incorrect letter."
     }
   } else {
