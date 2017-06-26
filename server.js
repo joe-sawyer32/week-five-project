@@ -70,9 +70,18 @@ app.post("/users", (request, response) => {
   });
 });
 
+app.post("/difficulty", checkAuth, (request, response) => {
+  response.render("index", {
+    user: request.session.user,
+    difficulty: true
+  });
+});
+
 app.post("/newgame", checkAuth, (request, response) => {
   guessCount = 8;
-  var mysteryWord = words[Math.floor(Math.random() * words.length)];
+  // select wordset based on requested difficulty
+  let wordset = words[request.body.difficulty + "Words"];
+  var mysteryWord = wordset[Math.floor(Math.random() * wordset.length)];
   console.log(mysteryWord);
   var display = [];
   for (let i = 0; i < mysteryWord.length; i++) {
