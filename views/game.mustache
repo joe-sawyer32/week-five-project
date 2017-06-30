@@ -13,7 +13,7 @@
     {{#user}}
         {{#game}}
             <h2>User: {{username}}</h2>
-            <h3>{{display}}</h3>
+            <h3>{{#display}} {{.}} {{/display}}</h3>
             {{#guessCount}}
             <h3>Guesses Remaining: {{guessCount}}</h3>
             <form action="/game" method="post">
@@ -23,7 +23,7 @@
             {{#errors}}
                 <p>{{msg}}</p>
             {{/errors}}
-            <h3>Letters Guessed: {{guessed}}</h3>
+            <h3>Letters Guessed: {{#guessed}} {{.}} {{/guessed}}</h3>
             {{/guessCount}} 
             {{#gameover}}
                 {{#winner}}
