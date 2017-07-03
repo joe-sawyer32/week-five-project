@@ -6,44 +6,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css?family=Graduate" rel="stylesheet">
+    <link rel="stylesheet" href="/game.css">
     <title>Mystery Word - Game</title>
 </head>
 
 <body>
-    <h1>GAME PAGE</h1>
+  <div class="display">
+    <h1>MYST-RY W-RD</h1>
     {{#user}}
         {{#game}}
             <h2>User: {{username}}</h2>
-            <h3>{{#display}} {{.}} {{/display}}</h3>
-            {{#guessCount}}
+            <h3 class="wordDisplay">{{#display}} {{.}} {{/display}}</h3>
+            {{^gameover}}
             <h3>Guesses Remaining: {{guessCount}}</h3>
-            <form action="/game" method="post">
+            <form class="guessForm" action="/game" method="post">
                 <label for="guess">Your Guess: </label>
-                <input type="text" name="guess">
+                <input class="guessInput" type="text" name="guess">
             </form>
             {{#errors}}
-                <p>{{msg}}</p>
+                <p class="errors">{{msg}}</p>
             {{/errors}}
             <h3>Letters Guessed: {{#guessed}} {{.}} {{/guessed}}</h3>
-            {{/guessCount}} 
+            {{/gameover}} 
             {{#gameover}}
                 {{#winner}}
-                    <h3>Congratulations! You cracked the mystery word!</h3>
+                    <h3 class="winMsg">Congratulations! You cracked the mystery word!</h3>
                 {{/winner}}
                 {{#loser}}
-                    <h3>You're out of guesses...</h3>
-                    <h3>The myster word was: {{word}}</h3>
+                    <h3 class="loseMsg">You're out of guesses...</h3>
+                    <h3 class="loseMsg">The myster word was: {{word}}</h3>
                 {{/loser}}
-                <h3>Would you like to play again?</h3>
-                <form action="/difficulty" method="post">
-                    <button type="submit">Yes</button>
-                </form>
-                <form action="/" method="get">
-                    <button type="submit">No</button>
-                </form>
+                <h3 class="playAgain">Would you like to play again?</h3>
+                <div class="yesAndNo">
+                  <form class="yesForm" action="/difficulty" method="post">
+                    <button class="yesButton" type="submit">yes</button>
+                  </form>
+                  <form class="noForm" action="/" method="get">
+                    <button class="noButton" type="submit">no</button>
+                  </form>
+                </div>
             {{/gameover}}
         {{/game}}
     {{/user}}
+  </div>
 </body>
 
 </html>

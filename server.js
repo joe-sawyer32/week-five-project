@@ -10,7 +10,7 @@ const session = require("express-session");
 const sessionConfig = require("./sessionConfig");
 
 // GAME SPECIFICS
-const words = require("./models/data");
+const words = require("./data");
 const checkAuth = require("./middleware/checkAuth.js");
 const checkSingleAlpha = require("./middleware/checkSingleAlpha.js");
 var wordset;
@@ -26,34 +26,6 @@ app.use("/", express.static(path.join(__dirname, "public")));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());
 app.use(session(sessionConfig));
-
-// function checkAuth(request, response, next) {
-//   if (!request.session.user) {
-//     request.session.errors = { msg: "Please login to begin playing." };
-//     response.redirect("/");
-//   } else {
-//     delete request.session.errors;
-//     next();
-//   }
-// }
-
-// function checkSingleAlpha(request, response, next) {
-//   request
-//     .checkBody("guess", "Please select only alphabet character.")
-//     .isAlpha();
-//   request
-//     .checkBody("guess", "Please select one character.")
-//     .isLength({ min: 1, max: 1 });
-//   let errors = request.validationErrors();
-//   request.session.errors = errors;
-
-//   if (errors) {
-//     response.redirect("/game");
-//   } else {
-//     delete request.session.errors;
-//     next();
-//   }
-// }
 
 // ROUTES
 app.get("/", (request, response) => {

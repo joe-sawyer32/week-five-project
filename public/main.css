@@ -4,6 +4,11 @@ body {
   font-family: 'Graduate', cursive;
 }
 
+button,
+input {
+  font-family: 'Graduate', cursive;
+}
+
 .display {
   max-width: 50vw;
 }
@@ -20,7 +25,6 @@ h1 {
 .loginInput,
 .loginButton {
   margin: 0 0.5rem;
-  font-family: 'Graduate', cursive;
   font-size: 1.5rem;
 }
 
@@ -29,6 +33,7 @@ h1 {
 }
 
 .loginReminder {
+  text-align: center;
   color: red;
   font-style: italic;
 }
@@ -46,13 +51,11 @@ h1 {
 }
 
 .playButton {
-  font-family: 'Graduate', cursive;
   font-size: 3rem;
   border-radius: 1rem;
 }
 
 .diffButton {
-  font-family: 'Graduate', cursive;
   font-size: 2rem;
   border-radius: 1rem;
   margin: 0 1rem;

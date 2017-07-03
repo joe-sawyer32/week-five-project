@@ -1,3 +1,69 @@
 body {
+  display: flex;
+  justify-content: center;
   font-family: 'Graduate', cursive;
+}
+
+button,
+input {
+  font-family: 'Graduate', cursive;
+}
+
+.display {
+  text-align: center;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+.wordDisplay {
+  font-size: 6rem;
+  margin: 3rem 0;
+}
+
+.guessForm {
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.guessInput {
+  font-size: 2rem;
+  max-width: 1.5rem;
+  margin: 0 1rem;
+}
+
+.errors {
+  text-align: center;
+  color: red;
+  font-style: italic;
+}
+
+.winMsg,
+.loseMsg,
+.playAgain,
+.yesButton,
+.noButton {
+  font-size: 2rem;
+}
+
+.loseMsg {
+  color: red;
+}
+
+.yesAndNo {
+  display: flex;
+  justify-content: center;
+}
+
+.yesForm,
+.noForm {
+  margin: 0 2rem;
+}
+
+.yesButton,
+.noButton {
+  border-radius: 1rem;
 }
