@@ -5,35 +5,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Graduate" rel="stylesheet">
+    <link rel="stylesheet" href="/main.css">
     <title>Mystery Word - Home</title>
 </head>
 
 <body>
-    <h1>MYSTERY WORD</h1>
+  <div class="display">
+    <h1>MYST-RY W-RD</h1>
     {{^user}}
-    <form action="/users" method="post">
-        <input type="text" name="username" placeholder="Enter your name">
-        <button type="submit">Login</button>
+    <form class="loginForm" action="/users" method="post">
+        <input class="loginInput" type="text" name="username" placeholder="ENTER YOUR NAME">
+        <button class="loginButton" type="submit">LOGIN</button>
     </form>
     {{#errors}}
-        <p>{{msg}}</p>
+        <p class="loginReminder">{{msg}}</p>
     {{/errors}}
     {{/user}}
     {{#user}}
-        <h4>You are logged in as: {{username}}</h4>
+        <h4 class="loggedIn">You are logged in as: {{username}}</h4>
     {{/user}}
     {{^difficulty}}
-        <form action="/difficulty" method="post">
-            <button type="submit">PLAY</button>
+        <form  class="playForm" action="/difficulty" method="post">
+            <button class="playButton" type="submit">PLAY</button>
         </form>
     {{/difficulty}}
     {{#difficulty}}
-        <form action="/newgame" method="post">
-            <input type="submit" name="difficulty" value="easy">
-            <input type="submit" name="difficulty" value="normal">
-            <input type="submit" name="difficulty" value="hard">
+        <form class="diffForm" action="/newgame" method="post">
+            <input class="diffButton" type="submit" name="difficulty" value="Easy">
+            <input class="diffButton" type="submit" name="difficulty" value="Normal">
+            <input class="diffButton" type="submit" name="difficulty" value="Hard">
         </form>
     {{/difficulty}}
+  </div>
 </body>
 
 </html>

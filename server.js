@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const port = process.env.port || 8000;
+const path = require("path");
 
 const mustacheExpress = require("mustache-express");
 const bodyParser = require("body-parser");
@@ -18,10 +19,10 @@ const startGuesses = 8;
 // SET ENGINE
 app.engine("mustache", mustacheExpress());
 app.set("view engine", "mustache");
-app.set("views", "./views");
+app.set("views", path.join(__dirname, "views"));
 
 // MIDDLEWARE
-app.use("/", express.static("/public"));
+app.use("/", express.static(path.join(__dirname, "public")));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());
 app.use(session(sessionConfig));

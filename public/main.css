@@ -1,0 +1,59 @@
+body {
+  display: flex;
+  justify-content: center;
+  font-family: 'Graduate', cursive;
+}
+
+.display {
+  max-width: 50vw;
+}
+
+h1 {
+  font-size: 4rem;
+}
+
+.loginForm {
+  display: flex;
+  margin: 1rem;
+}
+
+.loginInput,
+.loginButton {
+  margin: 0 0.5rem;
+  font-family: 'Graduate', cursive;
+  font-size: 1.5rem;
+}
+
+.loginButton {
+  border-radius: .5rem;
+}
+
+.loginReminder {
+  color: red;
+  font-style: italic;
+}
+
+.loggedIn {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.playForm,
+.diffForm {
+  display: flex;
+  justify-content: center;
+  margin-top: 6rem;
+}
+
+.playButton {
+  font-family: 'Graduate', cursive;
+  font-size: 3rem;
+  border-radius: 1rem;
+}
+
+.diffButton {
+  font-family: 'Graduate', cursive;
+  font-size: 2rem;
+  border-radius: 1rem;
+  margin: 0 1rem;
+}
