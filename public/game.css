@@ -1,25 +1,15 @@
-body {
-  display: flex;
-  justify-content: center;
-  font-family: 'Graduate', cursive;
-}
-
-button,
-input {
-  font-family: 'Graduate', cursive;
-}
-
 .display {
-  text-align: center;
+  margin: 5vh 5vw;
 }
 
-h1 {
-  font-size: 2.5rem;
+h2 {
+  margin: 0 3rem;
 }
 
 .wordDisplay {
-  font-size: 6rem;
-  margin: 3rem 0;
+  font-size: 2rem;
+  margin: 6rem 0 4rem 0;
+  letter-spacing: -.25rem;
 }
 
 .guessForm {
@@ -31,7 +21,7 @@ h1 {
 
 .guessInput {
   font-size: 2rem;
-  max-width: 1.5rem;
+  width: 1em;
   margin: 0 1rem;
 }
 
@@ -46,7 +36,7 @@ h1 {
 .playAgain,
 .yesButton,
 .noButton {
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 .loseMsg {
@@ -56,6 +46,7 @@ h1 {
 .yesAndNo {
   display: flex;
   justify-content: center;
+  margin-top: 3rem;
 }
 
 .yesForm,
@@ -66,4 +57,16 @@ h1 {
 .yesButton,
 .noButton {
   border-radius: 1rem;
+}
+
+@media (min-width: 505px) {
+  .wordDisplay {
+    font-size: 3.5rem;
+  }
+}
+
+@media (min-width: 756px) {
+  .wordDisplay {
+    font-size: 5rem;
+  }
 }

@@ -4,14 +4,14 @@ const allWords = fs
   .toLowerCase()
   .split("\n");
 
-const easyWords = allWords.filter(word => {
+const easyWords = allWords.filter(function(word) {
   return word.length > 3 && word.length < 7;
 });
-const normalWords = allWords.filter(word => {
+const normalWords = allWords.filter(function(word) {
   return word.length > 5 && word.length < 9;
 });
-const hardWords = allWords.filter(word => {
-  return word.length > 7;
+const hardWords = allWords.filter(function(word) {
+  return word.length > 7 && word.length < 11;
 });
 
 module.exports = {

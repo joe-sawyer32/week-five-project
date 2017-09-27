@@ -14,7 +14,7 @@
   <div class="display">
     <h1>MYST-RY W-RD</h1>
     {{^user}}
-    <form class="loginForm" action="/users" method="post">
+    <form class="loginForm" action="/newgame/login" method="post">
         <input class="loginInput" type="text" name="username" placeholder="ENTER YOUR NAME">
         <button class="loginButton" type="submit">LOGIN</button>
     </form>
@@ -26,12 +26,12 @@
         <h4 class="loggedIn">You are logged in as: {{username}}</h4>
     {{/user}}
     {{^difficulty}}
-        <form  class="playForm" action="/difficulty" method="post">
+        <form  class="playForm" action="/newgame/difficulty" method="post">
             <button class="playButton" type="submit">PLAY</button>
         </form>
     {{/difficulty}}
     {{#difficulty}}
-        <form class="diffForm" action="/newgame" method="post">
+        <form class="diffForm" action="/newgame/setup" method="post">
             <input class="diffButton" type="submit" name="difficulty" value="easy">
             <input class="diffButton" type="submit" name="difficulty" value="normal">
             <input class="diffButton" type="submit" name="difficulty" value="hard">

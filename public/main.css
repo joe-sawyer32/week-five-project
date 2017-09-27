@@ -1,62 +1,88 @@
 body {
   display: flex;
   justify-content: center;
-  font-family: 'Graduate', cursive;
+  font-family: "Graduate", cursive;
 }
 
 button,
 input {
-  font-family: 'Graduate', cursive;
+  font-family: "Graduate", cursive;
+}
+
+button:focus,
+input:focus {
+  outline: none;
 }
 
 .display {
-  max-width: 50vw;
+  margin: 25vh 25vw;
+  text-align: center;
 }
 
 h1 {
-  font-size: 4rem;
+  font-size: 2rem;
+}
+
+form {
+  display: flex;
+  justify-content: center;
 }
 
 .loginForm {
-  display: flex;
   margin: 1rem;
 }
 
 .loginInput,
 .loginButton {
   margin: 0 0.5rem;
-  font-size: 1.5rem;
+  font-size: 0.75rem;
 }
 
 .loginButton {
-  border-radius: .5rem;
+  border-radius: 0.5rem;
 }
 
 .loginReminder {
-  text-align: center;
   color: red;
   font-style: italic;
 }
 
 .loggedIn {
-  text-align: center;
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
-.playForm,
+.playForm {
+  margin: 6rem;
+}
+
 .diffForm {
-  display: flex;
-  justify-content: center;
-  margin-top: 6rem;
+  margin: 6rem 0 0 0;
 }
 
 .playButton {
-  font-size: 3rem;
+  font-size: 1.5rem;
   border-radius: 1rem;
 }
 
 .diffButton {
-  font-size: 2rem;
+  font-size: 1rem;
   border-radius: 1rem;
   margin: 0 1rem;
+}
+
+@media (min-width: 756px) {
+  h1,
+  .playButton {
+    font-size: 2.9rem;
+  }
+  .loginInput,
+  .loginButton {
+    font-size: 1.2rem;
+  }
+  .loggedIn {
+    font-size: 1.5rem;
+  }
+  .diffButton {
+    font-size: 2rem;
+  }
 }

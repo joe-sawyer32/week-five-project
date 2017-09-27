@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css?family=Graduate" rel="stylesheet">
+    <link rel="stylesheet" href="/main.css">
     <link rel="stylesheet" href="/game.css">
     <title>Mystery Word - Game</title>
 </head>
@@ -21,12 +22,13 @@
             <h3>Guesses Remaining: {{guessCount}}</h3>
             <form class="guessForm" action="/game" method="post">
                 <label for="guess">Your Guess: </label>
-                <input class="guessInput" type="text" name="guess">
+                <input class="guessInput" type="text" name="guess" autofocus="autofocus" maxlength="1">
             </form>
             {{#errors}}
                 <p class="errors">{{msg}}</p>
             {{/errors}}
-            <h3>Letters Guessed: {{#guessed}} {{.}} {{/guessed}}</h3>
+            <h3>Letters Guessed:</h3>
+            <h3>{{#guessed}} {{.}} {{/guessed}}</h3>
             {{/gameover}} 
             {{#gameover}}
                 {{#winner}}
@@ -38,10 +40,10 @@
                 {{/loser}}
                 <h3 class="playAgain">Would you like to play again?</h3>
                 <div class="yesAndNo">
-                  <form class="yesForm" action="/difficulty" method="post">
+                  <form class="yesForm" action="/newgame/difficulty" method="post">
                     <button class="yesButton" type="submit">yes</button>
                   </form>
-                  <form class="noForm" action="/" method="get">
+                  <form class="noForm" action="/newgame" method="post">
                     <button class="noButton" type="submit">no</button>
                   </form>
                 </div>
