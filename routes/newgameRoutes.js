@@ -8,6 +8,7 @@ const startGuesses = 8;
 
 // MIDDLEWARE
 const checkAuth = require("../middleware/checkAuth");
+const checkAlphaNum = require("../middleware/checkAlphaNum");
 
 // ROUTES
 newgameRoutes.get("/", function(request, response) {
@@ -22,7 +23,7 @@ newgameRoutes.post("/", function(request, response) {
   response.redirect("/");
 });
 
-newgameRoutes.post("/login", function(request, response) {
+newgameRoutes.post("/login", checkAlphaNum, function(request, response) {
   if (!request.session.user) {
     request.session.user = request.body;
   }

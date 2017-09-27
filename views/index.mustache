@@ -15,8 +15,8 @@
     <h1>MYST-RY W-RD</h1>
     {{^user}}
     <form class="loginForm" action="/newgame/login" method="post">
-        <input class="loginInput" type="text" name="username" placeholder="ENTER YOUR NAME">
-        <button class="loginButton" type="submit">LOGIN</button>
+        <input class="loginInput" type="text" name="username" placeholder="Enter Your Name" autofocus="autofocus" maxlength="12">
+        <button class="loginButton" type="submit">Login</button>
     </form>
     {{#errors}}
         <p class="loginReminder">{{msg}}</p>
