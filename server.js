@@ -33,5 +33,5 @@ app.get("/", function(request, response) {
 });
 
 app.listen(port, function() {
-  console.log("Spinning with express: Port", port);
+  console.log("Spinning with express: Port ", port);
 });
