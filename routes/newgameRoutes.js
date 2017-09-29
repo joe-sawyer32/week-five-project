@@ -2,7 +2,7 @@ var express = require("express");
 var newgameRoutes = express.Router();
 
 // GAME SPECIFICS
-const words = require("../data");
+const words = require("../data/data");
 var wordset;
 const startGuesses = 8;
 

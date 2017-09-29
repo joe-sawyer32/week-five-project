@@ -1,6 +1,7 @@
+const path = require("path");
 const fs = require("fs");
 const allWords = fs
-  .readFileSync("/usr/share/dict/words", "utf-8")
+  .readFileSync(path.join(__dirname, "words.txt"), "utf-8")
   .toLowerCase()
   .split("\n");
 
